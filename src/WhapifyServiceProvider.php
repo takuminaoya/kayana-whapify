@@ -17,5 +17,10 @@ class WhapifyServiceProvider extends ServiceProvider
     /**
      * Bootstrap services.
      */
-    public function boot(): void {}
+    public function boot(): void
+    {
+        $this->publishes([
+            __DIR__ . '/../configs/config.php' => config_path('kayana_whapify.php')
+        ]);
+    }
 }
