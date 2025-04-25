@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Storage;
  */
 class Whapify
 {
-    private $version = "1.0.0";
+    private $version = "1.0.2";
 
     private $account;
     private $secret;
@@ -266,7 +266,7 @@ class Whapify
 
         return [
             "code" => $re['http_code'],
-            "datas" => $re['datas']
+            "datas" => $re
         ];
     }
 }
