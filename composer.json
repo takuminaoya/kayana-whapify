@@ -1,0 +1,25 @@
+{
+    "name": "kayana/whapify",
+    "description": "whatsapp handler for whapify by kayana creative",
+    "type": "package",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Kayana\\Whapify\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Kayana\\Whapify\\WhapifyServiceProvider"
+            ]
+        }
+    },
+    "authors": [
+        {
+            "name": "oka cipta w"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}
