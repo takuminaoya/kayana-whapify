@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Storage;
  */
 class Whapify
 {
-    private $version = "1.0.3-stable";
+    private $version = "1.0.4-stable";
 
     private $account;
     private $secret;
