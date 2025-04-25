@@ -21,6 +21,6 @@ class WhapifyServiceProvider extends ServiceProvider
     {
         $this->publishes([
             __DIR__ . '/../configs/config.php' => config_path('whapify.php')
-        ]);
+        ], 'kayana-whapify');
     }
 }

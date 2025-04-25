@@ -9,7 +9,7 @@ return [
     "filename" => "whatsapp.json",
 
     // jika produksi ini posisi atau disk dimana whatsapp.ky tersimpan
-    "public_disk" => "assets",
+    "public_disk" => "local",
     "public_path" => "configuration",
     "public_name" => "whatsapp.key",
 
