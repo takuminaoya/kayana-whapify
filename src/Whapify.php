@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Storage;
  */
 class Whapify
 {
-    private $version = "1.0.5-stable";
+    private $version = "1.0.6.5-stable";
 
     private $account;
     private $secret;
@@ -282,10 +282,10 @@ class Whapify
      * **/
     function otp($recipient, $message = "Your OTP is", $type = "whatsapp", $expired = 300)
     {
-        $url = "get/send/otp";
+        $url = "send/otp";
         $message = $message;
         $datas = [
-            "recipient" => $recipient,
+            "phone" => $recipient,
             "type" => $type,
             "message" => $message . " {{otp}}",
             "expire" => $expired
@@ -356,7 +356,7 @@ class Whapify
 
         return [
             "code" => $http_code,
-            "datas" => $response
+            "datas" => json_decode($response, true)
         ];
     }
 }
