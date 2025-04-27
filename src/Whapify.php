@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Storage;
  */
 class Whapify
 {
-    private $version = "1.0.4-stable";
+    private $version = "1.0.5-stable";
 
     private $account;
     private $secret;
@@ -118,7 +118,7 @@ class Whapify
         if (env('APP_ENV') == "production") {
             $data = $this->decryptConfig();
         } else {
-            $content = Storage::disk("local")->get($this->path . "/" . $this->filename);
+            $content = Storage::disk($this->disk)->get($this->path . "/" . $this->filename);
             $data = json_decode($content, true);
         }
 
@@ -267,6 +267,96 @@ class Whapify
         return [
             "code" => $re['http_code'],
             "datas" => $re['response']
+        ];
+    }
+
+    /** 
+     * Whapify API Class From Kayana
+     * Kirim OTP via Whatsapp
+     * 
+     * @param recipient kepada siapa otp dikirim
+     * @param message isi pesan didepan sebelum kode otp contoh : otp anda adalah 
+     * @param type via apa otp ini dikirm sekarang hanya whatsapp yang didukung
+     * @param expired waktu kadaluarta otp ini dalam detik, default 300 detik atau 5 menit
+     * @return array kode dan data
+     * **/
+    function otp($recipient, $message = "Your OTP is", $type = "whatsapp", $expired = 300)
+    {
+        $url = "get/send/otp";
+        $message = $message;
+        $datas = [
+            "recipient" => $recipient,
+            "type" => $type,
+            "message" => $message . " {{otp}}",
+            "expire" => $expired
+        ];
+
+        $re = $this->__Init($url, $datas);
+
+        return [
+            "code" => $re['http_code'],
+            "data" => $re['response']
+        ];
+    }
+
+    /** 
+     * Whapify API Class From Kayana
+     * Verifikasi nomor OTP yang dikirim via Whatsapp
+     * 
+     * @param otp nomor otp yang dikirimkan ke user
+     * @return array kode dan data
+     * **/
+    function verifyOtp($otp)
+    {
+        $url = $this->base_url . "/" . "get/otp?secret=" . $this->secret . "&otp=" . $otp;
+
+        // Initialize cURL session
+        $ch = curl_init();
+
+        // Set cURL options
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+        // Execute the request
+        $response = curl_exec($ch);
+        $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+        // Close cURL session
+        curl_close($ch);
+
+        return [
+            "code" => $http_code,
+            "datas" => $response
+        ];
+    }
+
+    /** 
+     * Whapify API Class From Kayana
+     * Mendapatkan sis kredits whapify
+     * 
+     * @return array kode dan data
+     * **/
+    function getCredit()
+    {
+        $url = $this->base_url . "/" . "get/credits?secret=" . $this->secret;
+
+        // Initialize cURL session
+        $ch = curl_init();
+
+        // Set cURL options
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+        // Execute the request
+        $response = curl_exec($ch);
+        $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+        // Close cURL session
+        curl_close($ch);
+
+        return [
+            "code" => $http_code,
+            "datas" => $response
         ];
     }
 }
