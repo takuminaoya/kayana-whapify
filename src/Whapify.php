@@ -264,10 +264,7 @@ class Whapify
         $url = "get/wa.";
         $re = $this->__Init($url . $status);
 
-        return [
-            "code" => $re['http_code'],
-            "datas" => $re['response']
-        ];
+        return $re['response'];
     }
 
     /** 
@@ -293,10 +290,7 @@ class Whapify
 
         $re = $this->__Init($url, $datas);
 
-        return [
-            "code" => $re['http_code'],
-            "data" => $re['response']
-        ];
+        return $re['response'];
     }
 
     /** 
