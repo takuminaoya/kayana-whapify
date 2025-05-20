@@ -247,10 +247,7 @@ class Whapify
 
         $re = $this->__Init($url, $datas);
 
-        return [
-            "code" => $re['http_code'],
-            "message" => $re ? $re['response']['message'] : "Terjadi kesalahan pada setup whapify. check config dan account untuk memastikan apakah account telah aktif"
-        ];
+        return $re['response'];
     }
 
     /** 
@@ -352,5 +349,28 @@ class Whapify
             "code" => $http_code,
             "datas" => json_decode($response, true)
         ];
+    }
+
+    /** 
+     * Whapify API Class From Kayana
+     * Mendapatkan sis kredits whapify
+     * 
+     * @return array kode dan data
+     * **/
+    function getMessageByID($id, $tipe = 'sent')
+    {
+        $url = $this->base_url . "/" . "get/wa.message?secret=" . $this->secret . "&type=" . $tipe . "&id=" .$id;
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $response = curl_exec($ch);
+        $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+        $arr = json_decode($response, true);
+
+        curl_close($ch);
+
+        return $arr;
     }
 }
